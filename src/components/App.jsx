@@ -20,31 +20,39 @@ const App = () => {
     dispatch(refreshUser());
   }, [dispatch]);
 
+  const baseUrl = '';
+
   return isRefreshing ? (
     <b>Refreshing user...</b>
   ) : (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path={baseUrl} element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route
-          path="register"
+          path={`${baseUrl}/register`}
           element={
             <RestrictedRoute
-              redirectTo="/phonebook"
+              redirectTo={`${baseUrl}/phonebook`}
               component={<RegisterPage />}
             />
           }
         />
         <Route
-          path="login"
+          path={`${baseUrl}/login`}
           element={
-            <RestrictedRoute redirectTo="phonebook" component={<LoginPage />} />
+            <RestrictedRoute
+              redirectTo={`${baseUrl}/phonebook`}
+              component={<LoginPage />}
+            />
           }
         />
         <Route
-          path="phonebook"
+          path={`${baseUrl}/phonebook`}
           element={
-            <PrivateRoute redirectTo="login" component={<PhonebookPage />} />
+            <PrivateRoute
+              redirectTo={`${baseUrl}/login`}
+              component={<PhonebookPage />}
+            />
           }
         />
       </Route>
