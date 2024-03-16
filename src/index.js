@@ -10,7 +10,7 @@ import ErrorBoundary from 'ErrorBoundary';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ReduxProvider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/goit-react-hw-08-phonebook">
         <ErrorBoundary>
           <App />
         </ErrorBoundary>
