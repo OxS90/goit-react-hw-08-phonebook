@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
+axios.defaults.baseURL = 'https://wallet.b.goit.study';
 
 // Utility to add JWT
 const setAuthHeader = token => {
@@ -17,10 +17,8 @@ export const register = createAsyncThunk(
   'auth/register',
   async (credentials, thunkAPI) => {
     try {
-      const res = await axios.post('/users/signup', credentials);
-
+      const res = await axios.post('/api/auth/sign-up', credentials);
       setAuthHeader(res.data.token);
-      console.log(res.data.token);
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -34,7 +32,7 @@ export const logIn = createAsyncThunk(
   'auth/login',
   async (credentials, thunkAPI) => {
     try {
-      const res = await axios.post('/users/login', credentials);
+      const res = await axios.post('/api/auth/sign-in', credentials);
       setAuthHeader(res.data.token);
       return res.data;
     } catch (error) {
@@ -47,7 +45,7 @@ export const logIn = createAsyncThunk(
 
 export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
-    await axios.post('/users/logout');
+    await axios.delete('/api/auth/sign-out');
     clearAuthHeader();
     return null; // Return a value even if it's null
   } catch (error) {
@@ -69,7 +67,7 @@ export const refreshUser = createAsyncThunk(
 
     try {
       setAuthHeader(persistedToken);
-      const res = await axios.get('/users/current');
+      const res = await axios.get('/api/users/current');
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
